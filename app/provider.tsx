@@ -1,7 +1,8 @@
 'use client'
 
 import { ChakraProvider } from "@chakra-ui/react";
-import MyTheme from "@/app/theme";
+import MyTheme from "@/app/lib/theme";
+import Fonts from "@/app/lib/fonts";
 
 export function Providers({
     children
@@ -10,6 +11,7 @@ export function Providers({
 }) {
     return (
         <ChakraProvider theme={MyTheme}>
+            <Fonts />
             {children}
         </ChakraProvider>
     )
