@@ -1,40 +1,57 @@
+'use client';
+
+import ThemeToggleButton from '@/app/components/ThemeToggleButton';
 import Logo from '@/app/components/logo';
 import { HamburgerIcon } from '@chakra-ui/icons';
+import { Link } from '@chakra-ui/next-js';
 import {
   Box,
   Container,
   Flex,
   Heading,
   IconButton,
-  Link,
   Menu,
   MenuButton,
   MenuItem,
   MenuList,
   Stack,
+  Text,
   useColorModeValue
 } from '@chakra-ui/react';
-import NextLink from 'next/link';
-import ThemeToggleButton from '@/app/components/Button/ThemeToggleButton';
+import { useRouter } from 'next/navigation';
 
 const LinkItem = ({ href, path, children }) => {
   const active = path === href;
   const inactiveColor = useColorModeValue('gray200', 'whiteAlpha.900');
   return (
-    <NextLink href={href}>
-      <Link
-        p={2}
-        bg={active ? 'glassTeal' : undefined}
-        color={active ? '#202023' : inactiveColor}
-      >
-        {children}
-      </Link>
-    </NextLink>
+    <Link
+      href={href}
+      p={2}
+      bg={active ? 'glassTeal' : undefined}
+      color={active ? '#202023' : inactiveColor}
+    >
+      {children}
+    </Link>
   );
 };
 
+const links = [
+  {
+    path: '/',
+    name: 'About'
+  },
+  {
+    path: '/works',
+    name: 'Works'
+  },
+  {
+    path: '/posts',
+    name: 'Posts'
+  }
+];
+
 const Navbar = props => {
-  const { path } = props;
+  const path = useRouter();
 
   return (
     <Box
@@ -81,15 +98,17 @@ const Navbar = props => {
                 aria-label="Options"
               />
               <MenuList>
-                <NextLink href="/" passHref>
-                  <MenuItem as={Link}>About</MenuItem>
-                </NextLink>
-                <NextLink href="/works" passHref>
-                  <MenuItem as={Link}>Works</MenuItem>
-                </NextLink>
-                <NextLink href="/posts" passHref>
-                  <MenuItem as={Link}>Posts</MenuItem>
-                </NextLink>
+                {links.map(val => (
+                  <MenuItem as={Link} href={val.path} fontSize="l">
+                    {val.name}
+                  </MenuItem>
+                ))}
+                <MenuItem
+                  as={Link}
+                  href="https://github.com/xiegudong45/xiegudong-homepage"
+                >
+                  View Source
+                </MenuItem>
               </MenuList>
             </Menu>
           </Box>
